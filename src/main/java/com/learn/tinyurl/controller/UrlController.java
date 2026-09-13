@@ -26,8 +26,11 @@ public class UrlController {
 
     @PostMapping
     public ResponseEntity<CreateUrlResponse> createShortUrl(@Valid @RequestBody CreateUrlRequest request) {
-        Url url = urlService.createSimpleUrl(request.longUrl(), request.customAlias());
-        CreateUrlResponse response = new CreateUrlResponse(baseUrl + url.getShortCode(), url.getLongUrl(), request.customAlias());
+        Url url = urlService.createSimpleUrl(request.longUrl(), request.customAlias(), request.expiresAt());
+        CreateUrlResponse response = new CreateUrlResponse(baseUrl + url.getShortCode(),
+                url.getLongUrl(),
+                request.customAlias(),
+                url.getExpiresAt());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

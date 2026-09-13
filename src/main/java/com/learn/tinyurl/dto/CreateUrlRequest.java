@@ -1,8 +1,11 @@
 package com.learn.tinyurl.dto;
 
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+
+import java.time.LocalDateTime;
 
 public record CreateUrlRequest(
     @NotBlank(message = "Long URL cannot be blank")
@@ -12,6 +15,9 @@ public record CreateUrlRequest(
 
     @Size(max = 30, message = "Custom alias cannot exceed 30 characters")
     @Pattern(regexp = "^[a-zA-Z0-9_-]*$", message = "Custom alias can only contain alphanumeric characters, hyphens, and underscores")
-    String customAlias
+    String customAlias,
+
+    @Future(message = "Expiration date must be in the future")
+    LocalDateTime expiresAt
 ) {
 }

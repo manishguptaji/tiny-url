@@ -25,4 +25,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", ex.getMessage()));
     }
 
+    @ExceptionHandler(UrlExpiredException.class)
+    public ResponseEntity<Map<String, String>> handleUrlExpiredException(UrlExpiredException ex) {
+        return ResponseEntity.status(HttpStatus.GONE).body(Map.of("message", ex.getMessage()));
+    }
+
 }
