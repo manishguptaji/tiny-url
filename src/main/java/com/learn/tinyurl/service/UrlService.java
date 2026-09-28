@@ -87,6 +87,7 @@ public class UrlService {
 
         // Check if the short URL exists in Redis cache
         String cachedLongUrl = redisTemplate.opsForValue().get(KEY_PREFIX + shortUrl);
+        System.out.println("TINY URL - Cached long URL for short URL " + shortUrl + ": " + cachedLongUrl);
         if (cachedLongUrl != null) {
             return cachedLongUrl;
         }
@@ -97,6 +98,7 @@ public class UrlService {
             throw new UrlExpiredException("The URL has expired and is no longer valid.");
         }
 
+        System.out.println("TINY URL - Retrieved URL from DB for short URL " + shortUrl + ": " + url);
         Duration ttl = CACHE_TTL;
         if (expiryTime != null) {
             Duration timeUntilExpiry = Duration.between(LocalDateTime.now(), expiryTime);
@@ -108,6 +110,7 @@ public class UrlService {
 
         // Store the long URL in Redis cache with a TTL
         if (url != null && ttl.isPositive()) {
+            System.out.println("TINY URL - save in redis with TTL " + ttl.getSeconds() + " seconds for short URL " + shortUrl);
             redisTemplate.opsForValue().set(KEY_PREFIX + shortUrl, url.getLongUrl(), ttl);
         }
         return url != null ? url.getLongUrl() : null;
