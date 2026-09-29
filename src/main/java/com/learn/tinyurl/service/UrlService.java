@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -114,5 +115,14 @@ public class UrlService {
             redisTemplate.opsForValue().set(KEY_PREFIX + shortUrl, url.getLongUrl(), ttl);
         }
         return url != null ? url.getLongUrl() : null;
+    }
+
+    public List<Url> getUrlsByUserId() {
+        Long userId = 1L; // For now, we are using a hardcoded user ID. In a real application, you would get this from the authenticated user context.
+        return urlRepository.findByUserId(userId);
+    }
+
+    public void deleteUrlById(Long id) {
+        urlRepository.deleteById(id);
     }
 }

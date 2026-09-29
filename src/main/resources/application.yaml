@@ -24,7 +24,3 @@ spring:
 
 app:
     base-url: http://localhost:8080/
-
-jwt:
-  secret: demo-secret-key
-  expiration: 900000
