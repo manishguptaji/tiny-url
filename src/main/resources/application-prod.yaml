@@ -1,0 +1,26 @@
+spring:
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    consumer:
+      group-id: click-consumer
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/url_shortener
+    username: root
+    password: ${DB_PASSWORD}
+
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+
+app:
+  base-url: http://65.0.7.51:8080/
